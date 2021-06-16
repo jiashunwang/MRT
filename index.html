@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> Multi-Person 3D Motion Prediction with Multi-Range Transformers </title>
+    
+    <link href="style.css" rel="stylesheet">
+
+    <style>
+      body {
+        font-family: Arial;
+        font-size:15px;
+        margin: 60px auto;
+        width: auto;
+        max-width: 1200px;
+      }
+
+
+
+      hr {
+        border: 0;
+        height: 1.0px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+      }
+
+      .gap-30 {
+      width:100%;
+      height:30px;
+      }
+
+      .gap-20 {
+      width:100%;
+      height:20px;
+      }
+
+      .gap-10 {
+      width:100%;
+      height:10px;
+      }
+
+      .gap-5 {
+      width:100%;
+      height:5px;
+      }
+
+      .no-gutters {
+      margin-right: 0;
+      margin-left: 0;
+
+      > .col,
+      > [class*="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+
+    </style>
+
+  </head>
+
+  <div class="container">
+
+    <center><span style="font-size:36px"> Multi-Person 3D Motion Prediction with Multi-Range Transformers </span></center>
+    <div class="gap-5"></div>
+
+    <!--------------------- Author Names --------------------->
+    
+
+    <!--------------------- AFFILIATIONS --------------------->
+    <div class="gap-10"></div>
+
+    <p> We show the results of our method. Green color represents the input and blue represents the output. The results show that our method can predict smooth and natural multi-person 3d motions. </p>
+
+    
+       
+    <div class="embed-responsive embed-responsive-32by9">  
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours1.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours2.mp4" type=video/mp4><video>
+    </div>
+    
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours3.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours4.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours6.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/ours7.mp4" type=video/mp4><video>
+    </div>
+      
+    
+   <div class="gap-10"></div>
+
+    <p> We show our method compared with the other methods. Green color represents the input and blue represents the output. Our results are not only the closest to the real records but also very smooth and natural. It can be seen that RNN-based method (SocialPool) will quickly produce freezing motion. When predicting the absolute skeleton joint positions, decoding based on an input seed sequence (HRI) or adding the input sequential residual to the output (LTD), will make the predicted motion have hysteresis and repeat the history. </p>
+
+    
+       
+    <div class="embed-responsive embed-responsive-32by9">  
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp1.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp2.mp4" type=video/mp4><video>
+    </div>
+    
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp3.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp4.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp5.mp4" type=video/mp4><video>
+    </div>
+      
+    <div class="embed-responsive embed-responsive-32by9">
+    <video width="800px" playsinline autoplay loop preload muted> <source src="./results/wp6.mp4" type=video/mp4><video>
+    </div>
+    
+</html>
