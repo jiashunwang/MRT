@@ -165,7 +165,16 @@
     <iframe width="716" height="403" src="https://www.youtube.com/embed/DMBCkF6yrP8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
     </div>
     <hr>
-  
+    <!--------------------- methods --------------------->
+    <b><span style="font-size:20px">Methods:</span></b><br>
+
+    <div class="gap-20"></div>
+    <div class="img" style="text-align:center">
+      <img src="./results/networks.pdf" style="margin:0.2em;max-width:90%">
+    </div>
+    <div class="gap-20"></div>
+    Individual input motion is sent to the Local-range Transformer Encoder and all the person's motions are sent to the Global-range Transformer Encoder. $\otimes$ represents concatenate and $\oplus$ represents add. The encoded motion features are used as the key and value together with the query person skeleton for the Transformer Decoder. The output is the future motion prediction results. On the right, we show the architecture of the Transformer decoder. The encoder architecture is similar with the decoder except that the query, key and value are from the same input.
+    <hr>
   
     <!--------------------- results --------------------->
     <b><span style="font-size:20px">Qualitative Results:</span></b><br>
