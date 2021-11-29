@@ -1,7 +1,7 @@
 import torch
 import torch.optim as optim
 import numpy as np
-import torch_dct as dct
+import torch_dct as dct #https://github.com/zh217/torch-dct
 import time
 
 from MRT.Models import Transformer,Discriminator
