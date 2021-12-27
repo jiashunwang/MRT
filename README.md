@@ -4,7 +4,7 @@ This is an implementation of the NeurIPS'21 paper "Multi-Person 3D Motion Predic
 
 Please check our [paper](https://arxiv.org/pdf/2111.12073.pdf) and the [project webpage](https://jiashunwang.github.io/MRT/) for more details. 
 
-Besides the paper, we will also provide the code to fit our skeleton representation data to [SMPL](https://smpl.is.tue.mpg.de/) data.
+We will also provide the code to fit our skeleton representation data to [SMPL](https://smpl.is.tue.mpg.de/) data.
 
 ## Citation
 
