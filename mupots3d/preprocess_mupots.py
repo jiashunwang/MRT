@@ -47,7 +47,7 @@ for j in range(1,21,1):
             break
         final_data.append(temp_data[:,i:i+120,:,:])
     #print(j)
-final_data=np.concatenate(final_data)*0.015*0.1*1.8/3 # scale
+final_data=np.concatenate(final_data)*0.017*0.1*1.8/3 # scale
 final_data=final_data.reshape(-1,3,120,45) # n, 3 persons, 30 fps 4 seconds, 15 joints  xyz coordinates
 
 np.save('mupots_120_3persons.npy',final_data)
@@ -93,7 +93,7 @@ for j in range(1,21,1):
             break
         final_data.append(temp_data[:,i:i+120,:,:])
     #print(j)
-final_data=np.concatenate(final_data)*0.015*0.1*1.8/3 # scale
+final_data=np.concatenate(final_data)*0.017*0.1*1.8/3 # scale
 final_data=final_data.reshape(-1,2,120,45) # n, 2 persons, 30 fps 4 seconds, 15 joints xyz coordinates
 
 np.save('mupots_120_2persons.npy',final_data)
