@@ -12,7 +12,7 @@ from torch.nn import init
 
 
 
-from mocap_data import DATA
+from data import DATA
 dataset = DATA()
 batch_size=64
 
