@@ -9,8 +9,7 @@ import trimesh
 # 3 persons
 final_data=[]
 for j in range(1,21,1):
-    #1-5 original 30fps
-    #6-20 original 60fps
+
 
     data=io.loadmat('./data/TS'+str(j)+'/annot.mat')['annotations']
     if data.shape[1]!=3:
@@ -58,8 +57,7 @@ np.save('mupots_120_3persons.npy',final_data)
 
 final_data=[]
 for j in range(1,21,1):
-    #1-5 original 30fps
-    #6-20 original 60fps
+
     
     data=io.loadmat('./data/TS'+str(j)+'/annot.mat')['annotations']
     
