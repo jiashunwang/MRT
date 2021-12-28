@@ -8,7 +8,7 @@ We will also provide the code to fit our skeleton representation data to [SMPL](
 
 ## Citation
 
-If you use our code or paper, please consider citing:
+If you find our code or paper useful, please consider citing:
 ```
 @article{wang2021multi,
   title={Multi-Person 3D Motion Prediction with Multi-Range Transformers},
