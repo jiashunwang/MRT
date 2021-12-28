@@ -63,7 +63,7 @@ python ./mocap/preprocess_mupots.py
 ## Training
 To train our model, please try
 ```
-python train.py
+python train_mrt.py
 ```
 
 ## Evaluation and visualization
