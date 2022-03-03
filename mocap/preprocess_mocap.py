@@ -35,7 +35,7 @@ for ii in range(4):
         motions = parse_amc(amc_path)
         length=len(motions)
         
-        if (iii%4==1) and (ii!=3):
+        if (iii%4==1) and (ii!=3): #just an example
             print('test')
             motion_list_A=[]
             for i in range(0,length,4):
