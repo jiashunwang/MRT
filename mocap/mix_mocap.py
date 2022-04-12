@@ -59,7 +59,7 @@ data=data[:,:,:,use,:]
 data=data.reshape(data.shape[0],3,-1,45)
 #In order to mix the data from different sources, we scale different data respectively in this code. 
 #This may make the result slightly different from the table in the paper.
-data=data*0.1*1.8/3
+# data=data*0.1*1.8/3
 np.save('train_3_120_mocap.npy',data)
 
 
@@ -118,7 +118,7 @@ use=[0,1,2,3,6,7,8,14,16,17,18,20,24,25,27] #used joints and order
 data=data.reshape(data.shape[0],3,-1,31,3)
 data=data[:,:,:,use,:]
 data=data.reshape(data.shape[0],3,-1,45)
-data=data*0.1*1.8/3 # scale
+# data=data*0.1*1.8/3 # scale
 print(data.shape)
 np.save('test_3_120_mocap.npy',data)
 
@@ -161,6 +161,6 @@ use=[0,1,2,3,6,7,8,14,16,17,18,20,24,25,27] #used joints and order
 data=data.reshape(data.shape[0],3,-1,31,3)
 data=data[:,:,:,use,:]
 data=data.reshape(data.shape[0],3,-1,45)
-data=data*0.1*1.8/3 # scale
+# data=data*0.1*1.8/3 # scale
 print(data.shape)
 np.save('discriminator_3_120_mocap.npy',data)
