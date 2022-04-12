@@ -263,9 +263,14 @@ with torch.no_grad():
             plt.close()
 
             
-
-    print('avg 1 second',np.mean(loss_list1))
-    print('avg 2 seconds',np.mean(loss_list2))
-    print('avg 3 seconds',np.mean(loss_list3))
+    # As mentioned in http://mocap.cs.cmu.edu/info.php,
+    # the "The File Formats - asf/amc" part
+    # to convert the unit in CMU-Mocap to meters
+    scale=(1.0/0.45)*2.54/100.0
+    to_decimeter = 10
+    
+    print('avg 1 second',np.mean(loss_list1) * scale * to_decimeter)
+    print('avg 2 seconds',np.mean(loss_list2) * scale * to_decimeter)
+    print('avg 3 seconds',np.mean(loss_list3) * scale * to_decimeter)
     
     
