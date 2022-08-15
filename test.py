@@ -4,6 +4,8 @@ import torch_dct as dct
 import time
 from MRT.Models import Transformer
 
+
+
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
@@ -13,8 +15,9 @@ import os
 
 from data import TESTDATA
 
+dataset_name='mupots'
 
-test_dataset = TESTDATA(dataset='mupots')
+test_dataset = TESTDATA(dataset=dataset_name)
 test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False)
 
 device='cpu'
@@ -28,11 +31,11 @@ model = Transformer(d_word_vec=128, d_model=128, d_inner=1024,
 
 
 
-plot=True
+plot=False
 gt=False
 
 
-model.load_state_dict(torch.load('./saved_model/39.model',map_location=device)) 
+model.load_state_dict(torch.load('./saved_model/19.model',map_location=device)) 
 
 
 body_edges = np.array(
@@ -117,39 +120,31 @@ with torch.no_grad():
             results=torch.cat([results,output_[:,:1,:]+torch.sum(rec[:,:i,:],dim=1,keepdim=True)],dim=1)
         results=results[:,1:,:]
         
-        prediction_1=results[:,:15,:].view(results.shape[0],-1,n_joints,3)
-        prediction_2=results[:,:30,:].view(results.shape[0],-1,n_joints,3)
-        prediction_3=results[:,:45,:].view(results.shape[0],-1,n_joints,3)
-
-        gt_1=output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)
-        gt_2=output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)
-        gt_3=output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)
+        if dataset_name=='mupots':
+            loss1=torch.sqrt(((results[:,:15,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss2=torch.sqrt(((results[:,:30,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss3=torch.sqrt(((results[:,:45,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
         
-        if MPJPE:
-        #MPJPE
-            loss1=torch.sqrt(((prediction_1 - gt_1) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss2=torch.sqrt(((prediction_2 - gt_2) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss3=torch.sqrt(((prediction_3 - gt_3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            
-        #pose with align
-        else:
-            loss1=torch.sqrt(((prediction_1 - prediction_1[:,:,0:1,:] - gt_1 + gt_1[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss2=torch.sqrt(((prediction_2 - prediction_2[:,:,0:1,:] - gt_2 + gt_2[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss3=torch.sqrt(((prediction_3 - prediction_3[:,:,0:1,:] - gt_3 + gt_3[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
 
-        # loss_list1=loss_list1+loss1
-        # loss_list2=loss_list2+loss2
-        # loss_list3=loss_list3+loss3
-        print(loss1)
-        #print(loss2)
-        #print(loss3)
+        if dataset_name=='mocap':
+            #match the scale with the paper
+            loss1=torch.sqrt(((results[:,:15,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss2=torch.sqrt(((results[:,:30,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss3=torch.sqrt(((results[:,:45,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+        
+        #pose with align
+        #     loss1=torch.sqrt(((prediction_1 - prediction_1[:,:,0:1,:] - gt_1 + gt_1[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+        #     loss2=torch.sqrt(((prediction_2 - prediction_2[:,:,0:1,:] - gt_2 + gt_2[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+        #     loss3=torch.sqrt(((prediction_3 - prediction_3[:,:,0:1,:] - gt_3 + gt_3[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+
+        
         loss_list1.append(np.mean(loss1))#+loss1
         loss_list2.append(np.mean(loss2))#+loss2
         loss_list3.append(np.mean(loss3))#+loss3
         
         loss=torch.mean((rec[:,:,:]-(output_[:,1:46,:]-output_[:,:45,:]))**2)
         losses.append(loss)
-        #print(loss)
+        
 
         rec=results[:,:,:]
         
@@ -163,6 +158,7 @@ with torch.no_grad():
 
         pred=pred[:,:,:,:].cpu()
         all_seq=all_seq[:,:,:,:].cpu()
+        
         
         if plot:
             fig = plt.figure(figsize=(10, 4.5))
@@ -263,6 +259,7 @@ with torch.no_grad():
             plt.close()
 
             
+
 
     print('avg 1 second',np.mean(loss_list1))
     print('avg 2 seconds',np.mean(loss_list2))
