@@ -120,22 +120,35 @@ with torch.no_grad():
             results=torch.cat([results,output_[:,:1,:]+torch.sum(rec[:,:i,:],dim=1,keepdim=True)],dim=1)
         results=results[:,1:,:]
         
-        if dataset_name=='mupots':
-            loss1=torch.sqrt(((results[:,:15,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss2=torch.sqrt(((results[:,:30,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss3=torch.sqrt(((results[:,:45,:].view(results.shape[0],-1,n_joints,3) - output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-        
+        prediction_1=results[:,:15,:].view(results.shape[0],-1,n_joints,3)
+        prediction_2=results[:,:30,:].view(results.shape[0],-1,n_joints,3)
+        prediction_3=results[:,:45,:].view(results.shape[0],-1,n_joints,3)
+
+        gt_1=output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)
+        gt_2=output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)
+        gt_3=output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)
 
         if dataset_name=='mocap':
-            #match the scale with the paper
-            loss1=torch.sqrt(((results[:,:15,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:16,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss2=torch.sqrt(((results[:,:30,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:31,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-            loss3=torch.sqrt(((results[:,:45,:].view(results.shape[0],-1,n_joints,3)*2/3 - output_seq[0][:,1:46,:].view(results.shape[0],-1,n_joints,3)*2/3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-        
-        #pose with align
-        #     loss1=torch.sqrt(((prediction_1 - prediction_1[:,:,0:1,:] - gt_1 + gt_1[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-        #     loss2=torch.sqrt(((prediction_2 - prediction_2[:,:,0:1,:] - gt_2 + gt_2[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
-        #     loss3=torch.sqrt(((prediction_3 - prediction_3[:,:,0:1,:] - gt_3 + gt_3[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            #match the scale with the paper, also see line 63 in mix_mocap.py
+            loss1=torch.sqrt(((prediction_1/1.8 - gt_1/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss2=torch.sqrt(((prediction_2/1.8 - gt_2/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss3=torch.sqrt(((prediction_3/1.8 - gt_3/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+
+            #pose with align
+            # loss1=torch.sqrt((((prediction_1 - prediction_1[:,:,0:1,:] - gt_1 + gt_1[:,:,0:1,:])/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            # loss2=torch.sqrt((((prediction_2 - prediction_2[:,:,0:1,:] - gt_2 + gt_2[:,:,0:1,:])/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            # loss3=torch.sqrt((((prediction_3 - prediction_3[:,:,0:1,:] - gt_3 + gt_3[:,:,0:1,:])/1.8) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+
+
+        if dataset_name=='mupots':
+            loss1=torch.sqrt(((prediction_1 - gt_1) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss2=torch.sqrt(((prediction_2 - gt_2) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            loss3=torch.sqrt(((prediction_3 - gt_3) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            
+            #pose with align
+            # loss1=torch.sqrt(((prediction_1 - prediction_1[:,:,0:1,:] - gt_1 + gt_1[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            # loss2=torch.sqrt(((prediction_2 - prediction_2[:,:,0:1,:] - gt_2 + gt_2[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
+            # loss3=torch.sqrt(((prediction_3 - prediction_3[:,:,0:1,:] - gt_3 + gt_3[:,:,0:1,:]) ** 2).sum(dim=-1)).mean(dim=-1).mean(dim=-1).numpy().tolist()
 
         
         loss_list1.append(np.mean(loss1))#+loss1
