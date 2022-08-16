@@ -36,7 +36,7 @@ class TESTDATA(data.Dataset):
     def __init__(self,dataset='mocap'):
         
         if dataset=='mocap':
-            self.data=np.load('./mocap/test_3_120.npy',allow_pickle=True)
+            self.data=np.load('./mocap/test_3_120_mocap.npy',allow_pickle=True)
             
         
             # use=[0,1,2,3,6,7,8,14,16,17,18,20,24,25,27]
