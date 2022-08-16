@@ -26,7 +26,7 @@ for ii in range(4):
     motion_list_A_test=[]
     asf_path = './all_asfamc/subjects/'+A+'/'+A+'.asf'
     iii=0
-    for each in os.listdir('./all_asfamc/subjects/'+A+'/'):
+    for each in sorted(os.listdir('./all_asfamc/subjects/'+A+'/')):
         if each[-3:]!='amc':
             continue
         print(each)
@@ -73,7 +73,7 @@ for ii in range(4):
     motion_list_B_test=[]
     asf_path_2 = './all_asfamc/subjects/'+B+'/'+B+'.asf'
     iii=0
-    for each in os.listdir('./all_asfamc/subjects/'+B+'/'):
+    for each in sorted(os.listdir('./all_asfamc/subjects/'+B+'/')):
         if each[-3:]!='amc':
             continue
         print(each)
@@ -155,13 +155,13 @@ np.save('two_test_4seconds_2.npy',np.array(test_data))
 
 data=[]
 test_data=[]
-for ii in os.listdir('./all_asfamc/subjects/'):
+for ii in sorted(os.listdir('./all_asfamc/subjects/')):
     
     motion_list_A_All=[]
     motion_list_A_test=[]
     asf_path = './all_asfamc/subjects/'+ii+'/'+ii+'.asf'
     iii=0
-    for each in os.listdir('./all_asfamc/subjects/'+ii+'/'):
+    for each in sorted(os.listdir('./all_asfamc/subjects/'+ii+'/')):
         if each[-3:]!='amc':
             continue
         amc_path = './all_asfamc/subjects/'+ii+'/'+each
