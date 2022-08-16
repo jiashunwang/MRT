@@ -35,7 +35,7 @@ plot=False
 gt=False
 
 
-model.load_state_dict(torch.load('./saved_model/19.model',map_location=device)) 
+model.load_state_dict(torch.load('./saved_model/29.model',map_location=device)) 
 
 
 body_edges = np.array(
